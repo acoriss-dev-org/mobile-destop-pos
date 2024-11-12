@@ -1,7 +1,8 @@
-import 'package:acorisspos/presentation/screens/home_screen.dart';
+import 'package:acorisspos/presentation/screens/permissions_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      home: const PermissionsScreen(),
     );
   }
 }
