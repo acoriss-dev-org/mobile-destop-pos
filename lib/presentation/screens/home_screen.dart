@@ -19,37 +19,39 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: const Color(0xff110152),
       body: Stack(
         children: [
-          InAppWebView(
-            initialUrlRequest: URLRequest(
-              url: WebUri.uri(
-                Uri.parse('https://kimia-monorepo.vercel.app'),
+          SafeArea(
+            child: InAppWebView(
+              initialUrlRequest: URLRequest(
+                url: WebUri.uri(
+                  Uri.parse('https://kimia-monorepo.vercel.app'),
+                ),
               ),
+              initialSettings: InAppWebViewSettings(),
+              onLoadStart: (controller, uri) {
+                loading = true;
+                error = false;
+                setState(() {});
+              },
+              onLoadStop: (controller, url) {
+                loading = false;
+                setState(() {});
+              },
+              onReceivedError: (controller, request, e) {
+                webViewController = controller;
+                loading = false;
+                error = true;
+                setState(() {});
+              },
+              onWebViewCreated: (InAppWebViewController controller) {
+                webViewController = controller;
+              },
+              onPermissionRequest: (controller, request) async {
+                return PermissionResponse(
+                  resources: request.resources,
+                  action: PermissionResponseAction.GRANT,
+                );
+              },
             ),
-            initialSettings: InAppWebViewSettings(),
-            onLoadStart: (controller, uri) {
-              loading = true;
-              error = false;
-              setState(() {});
-            },
-            onLoadStop: (controller, url) {
-              loading = false;
-              setState(() {});
-            },
-            onReceivedError: (controller, request, e) {
-              webViewController = controller;
-              loading = false;
-              error = true;
-              setState(() {});
-            },
-            onWebViewCreated: (InAppWebViewController controller) {
-              webViewController = controller;
-            },
-            onPermissionRequest: (controller, request) async {
-              return PermissionResponse(
-                resources: request.resources,
-                action: PermissionResponseAction.GRANT,
-              );
-            },
           ),
           if (loading)
             Container(
