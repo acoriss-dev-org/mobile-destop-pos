@@ -14,6 +14,11 @@ class _HomeScreenState extends State<HomeScreen> {
   bool error = false;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff110152),
@@ -26,7 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Uri.parse('https://kimia-monorepo.vercel.app'),
                 ),
               ),
-              initialSettings: InAppWebViewSettings(),
+              initialSettings: InAppWebViewSettings(
+                userAgent: "Chrome/89.0",
+              ),
               onLoadStart: (controller, uri) {
                 loading = true;
                 error = false;
@@ -69,13 +76,26 @@ class _HomeScreenState extends State<HomeScreen> {
               width: double.infinity,
               height: double.infinity,
               color: const Color(0xff110152),
-              child: const Center(
-                child: Text(
-                  "Oups!! Une erreur s'est produite, vérifiez votre connexion à internet et réessayez! 😥",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Oups!! Une erreur s'est produite, vérifiez votre connexion à internet et réessayez! 😥",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 20.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        webViewController?.reload();
+                      },
+                      child: const Text("Réessayer"),
+                    ),
+                  ],
                 ),
               ),
             )

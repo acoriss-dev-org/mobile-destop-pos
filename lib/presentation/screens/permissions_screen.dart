@@ -17,8 +17,9 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
   void initialisePermissions() async {
     loading = true;
     setState(() {});
-    PermissionStatus status = await Permission.camera.status;
-    if (status.isGranted) {
+
+    PermissionStatus cameraStatus = await Permission.camera.status;
+    if (cameraStatus.isGranted) {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (ctx) => const HomeScreen(),
@@ -32,7 +33,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
           return AlertDialog(
             title: const Text("Donner accès à la caméra"),
             content: const Text(
-              "Pour profiter des fonctionnalités de Acoriss POS, vous devez donner l'accès à votre caméra à l'application, celà va permettre à l'application de scanner les cartes ou tokens pour les paiements.",
+              "Pour profiter des fonctionnalités de Acoriss POS, vous devez donner l'accès à votre caméra à l'application. Cela va permettre à l'application de scanner les cartes ou tokens pour les paiements.",
             ),
             actions: [
               ElevatedButton(
@@ -92,14 +93,14 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                   ),
                   SizedBox(height: 15.0),
                   Text(
-                    "Il semble que vous ayez bloqué l'accès à la caméra à l'application, vous ne pourrez pas donc profiter de toutes les fonctionnalités",
+                    "Il semble que vous ayez bloqué l'accès à la caméra à l'application, vous ne pourrez donc pas profiter de toutes les fonctionnalités.",
                     style: TextStyle(
                       color: Colors.white,
                     ),
                   ),
                   SizedBox(height: 15.0),
                   Text(
-                    "Rendez-vous dans les paramètres de votre téléphonne > applications > scaneex > autorisations > camera > autoriser",
+                    "Rendez-vous dans les paramètres de votre téléphone > applications > Acoriss POS > autorisations > caméra > autoriser.",
                     style: TextStyle(
                       color: Colors.white,
                     ),
