@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,9 +17,56 @@ class _HomeScreenState extends State<HomeScreen> {
   bool loading = false;
   bool error = false;
 
+  void _startNfc() {
+    NfcManager.instance.startSession(
+      onDiscovered: (NfcTag tag) async {
+        try {
+          if (tag.data.containsKey('ndef')) {
+            final ndef = tag.data['ndef'];
+
+            if (ndef != null && ndef['cachedMessage'] != null) {
+              final cachedMessage = ndef['cachedMessage'];
+
+              if (cachedMessage['records'] != null) {
+                for (var record in cachedMessage['records']) {
+                  if (record['payload'] != null) {
+                    Uint8List payload = record['payload'];
+
+                    String decodedString =
+                        utf8.decode(payload, allowMalformed: true);
+                    String code = decodedString.substring(3);
+                    _triggerWebviewAction(code);
+                  }
+                }
+              }
+            }
+          }
+        } catch (e) {
+          debugPrint('Error processing NFC tag: $e');
+        }
+      },
+    );
+  }
+
+  void _triggerWebviewAction(String code) {
+    webViewController?.evaluateJavascript(source: """
+      if (window.onNfcCardScanned) {
+        window.onNfcCardScanned('$code');
+      } else {
+        console.log('No handler for Flutter event.');
+      }
+    """);
+  }
+
   @override
   void initState() {
     super.initState();
+    _startNfc();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
