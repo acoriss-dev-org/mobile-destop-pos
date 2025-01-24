@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: InAppWebView(
               initialUrlRequest: URLRequest(
                 url: WebUri.uri(
-                  Uri.parse('https://kimia-monorepo.vercel.app'),
+                  Uri.parse('https://acoriss-web-pos.vercel.app'),
                 ),
               ),
               initialSettings: InAppWebViewSettings(
