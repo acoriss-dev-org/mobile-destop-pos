@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.acoriss" "\0"
-            VALUE "FileDescription", "pos" "\0"
+            VALUE "FileDescription", "Acoriss POS" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "pos" "\0"
+            VALUE "InternalName", "Acoriss POS" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.acoriss. All rights reserved." "\0"
-            VALUE "OriginalFilename", "pos.exe" "\0"
-            VALUE "ProductName", "pos" "\0"
+            VALUE "OriginalFilename", "acoriss_pos.exe" "\0"
+            VALUE "ProductName", "Acoriss POS" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
